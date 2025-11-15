@@ -1,0 +1,110 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use App\Models\user_model;
+
+class user_controller extends Controller
+{
+    public function index(){
+        $model = new user_model();
+        $dbresults = $model->Get_All_User_Entries();
+        $data = ['userlist' => $dbresults];
+        return view('pos/user/index', $data);
+    }
+
+    public function add(){
+        $model = new user_model();
+        $roles = $model->Get_Roles();
+        $admins = $model->Get_Admins();
+
+        return view('pos/user/add', [
+            'roles' => $roles,
+            'admins' => $admins
+        ]);
+    }
+
+    public function create(Request $request)
+{
+    $FIRST_NAME = $request->input('FIRST_NAME');
+    $LAST_NAME = $request->input('LAST_NAME');
+    $USERNAME = $request->input('USERNAME');
+    $PASSWORD_HASH = $request->input('PASSWORD_HASH');
+    $ROLE_ID = $request->input('ROLE_ID');
+    $ADDRESS = $request->input('ADDRESS');
+    $CONTACT_NUMBER = $request->input('CONTACT_NUMBER');
+    $ADMIN_ID = $request->input('ADMIN_ID');
+
+   $rules = [
+    'FIRST_NAME' => 'required|string|max:100',
+    'LAST_NAME' => 'required|string|max:100',
+    'USERNAME' => 'required|string|max:255',
+    'PASSWORD_HASH' => 'required|string|max:255',
+    'ROLE_ID' => 'required|integer',
+    'ADDRESS' => 'nullable|string|max:255',
+    'CONTACT_NUMBER' => 'nullable|string|max:20',
+];
+
+$restrictedRoles = [2, 3, 4]; // cashier, manager, inventory
+
+if (in_array((int)$request->ROLE_ID, $restrictedRoles)) {
+    $rules['ADMIN_ID'] = 'required|integer';
+} else {
+    $rules['ADMIN_ID'] = 'nullable';
+}
+
+$request->validate($rules);
+
+    $model = new user_model();
+    $model->Set_New_User_Entry($FIRST_NAME, $LAST_NAME, $USERNAME, $PASSWORD_HASH, $ROLE_ID, $ADDRESS, $CONTACT_NUMBER, $ADMIN_ID);
+
+    return redirect('/pos/user');
+}
+
+
+
+    public function edit($USER_ID){
+        
+        $model = new user_model();
+        $roles = $model->Get_Roles();
+        $admins = $model->Get_Admins();
+        $dbresults  = $model -> Get_Specific_User_Entry($USER_ID);
+        $data = [
+            'userlist' => $dbresults,
+            'roles' => $roles,
+            'admins' => $admins
+        ];
+        return view('pos/user/edit', $data);
+    }
+
+    public function update($USER_ID, Request $request){
+        $model = new user_model();
+        $FIRST_NAME = $request->input('FIRST_NAME');
+        $LAST_NAME = $request->input('LAST_NAME');        
+        $USERNAME = $request ->input('USERNAME');
+        $PASSWORD_HASH = $request ->input('PASSWORD_HASH');
+        $ROLE_ID = $request ->input('ROLE_ID');
+        $ADDRESS = $request ->input('ADDRESS');
+        $CONTACT_NUMBER = $request ->input('CONTACT_NUMBER');
+        $ADMIN_ID = $request ->input('ADMIN_ID');
+        $model->Set_Update_User_Entry($USER_ID, $FIRST_NAME, $LAST_NAME, $USERNAME, $PASSWORD_HASH, $ROLE_ID, $ADDRESS, $CONTACT_NUMBER, $ADMIN_ID);
+        
+        return redirect('/pos/user');
+    }
+
+    public function delete($USER_ID){
+        $model = new user_model();
+        $dbresults = $model->Get_Specific_User_Entry($USER_ID);
+        $data = [
+            'userlist' => $dbresults
+        ];
+        return view('pos/user/delete', $data);
+    }
+
+    public function destroy($USER_ID){
+        $model = new user_model();
+        $model->Set_Destroy_User_Entry($USER_ID);
+        return redirect('/pos/user');
+        }
+}
