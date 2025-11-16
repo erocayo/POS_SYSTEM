@@ -64,8 +64,6 @@ $request->validate($rules);
     return redirect('/pos/user');
 }
 
-
-
     public function edit($USER_ID){
         
         $model = new user_model();
