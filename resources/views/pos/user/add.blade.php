@@ -23,7 +23,7 @@
         <br>
 
         <label>Password</label>
-        <input type="password" name="PASSWORD_HASH" required>
+        <input type="password" name="PASSWORD" required>
         <br>
 
         <label>Role</label>

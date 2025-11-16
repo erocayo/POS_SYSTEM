@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\user_model;
+use Illuminate\Support\Facades\Hash;
 
 class user_controller extends Controller
 {
@@ -30,7 +31,8 @@ class user_controller extends Controller
     $FIRST_NAME = $request->input('FIRST_NAME');
     $LAST_NAME = $request->input('LAST_NAME');
     $USERNAME = $request->input('USERNAME');
-    $PASSWORD_HASH = $request->input('PASSWORD_HASH');
+    $PASSWORD = $request->input('password');
+    $PASSWORD_HASH = Hash::make($PASSWORD);
     $ROLE_ID = $request->input('ROLE_ID');
     $ADDRESS = $request->input('ADDRESS');
     $CONTACT_NUMBER = $request->input('CONTACT_NUMBER');
@@ -40,7 +42,7 @@ class user_controller extends Controller
     'FIRST_NAME' => 'required|string|max:100',
     'LAST_NAME' => 'required|string|max:100',
     'USERNAME' => 'required|string|max:255',
-    'PASSWORD_HASH' => 'required|string|max:255',
+    'PASSWORD' => 'required|string|max:255',
     'ROLE_ID' => 'required|integer',
     'ADDRESS' => 'nullable|string|max:255',
     'CONTACT_NUMBER' => 'nullable|string|max:20',
@@ -78,20 +80,44 @@ $request->validate($rules);
         return view('pos/user/edit', $data);
     }
 
-    public function update($USER_ID, Request $request){
-        $model = new user_model();
-        $FIRST_NAME = $request->input('FIRST_NAME');
-        $LAST_NAME = $request->input('LAST_NAME');        
-        $USERNAME = $request ->input('USERNAME');
-        $PASSWORD_HASH = $request ->input('PASSWORD_HASH');
-        $ROLE_ID = $request ->input('ROLE_ID');
-        $ADDRESS = $request ->input('ADDRESS');
-        $CONTACT_NUMBER = $request ->input('CONTACT_NUMBER');
-        $ADMIN_ID = $request ->input('ADMIN_ID');
-        $model->Set_Update_User_Entry($USER_ID, $FIRST_NAME, $LAST_NAME, $USERNAME, $PASSWORD_HASH, $ROLE_ID, $ADDRESS, $CONTACT_NUMBER, $ADMIN_ID);
-        
-        return redirect('/pos/user');
+    public function update($USER_ID, Request $request)
+{
+    $model = new user_model();
+
+    $FIRST_NAME = $request->input('FIRST_NAME');
+    $LAST_NAME = $request->input('LAST_NAME');
+    $USERNAME = $request->input('USERNAME');
+    $PASSWORD = $request->input('PASSWORD');
+    $ROLE_ID = $request->input('ROLE_ID');
+    $ADDRESS = $request->input('ADDRESS');
+    $CONTACT_NUMBER = $request->input('CONTACT_NUMBER');
+    $ADMIN_ID = $request->input('ADMIN_ID');
+
+
+    $existingUser = $model->where('USER_ID', $USER_ID)->first();
+
+    // If password field is filled, hash new password
+    if (!empty($PASSWORD)) {
+        $PASSWORD_HASH = Hash::make($PASSWORD);
+    } else {
+        // Keep the existing password hash
+        $PASSWORD_HASH = $existingUser->PASSWORD_HASH;
     }
+
+    $model->where('USER_ID', $USER_ID)->update([
+        'FIRST_NAME' => $FIRST_NAME,
+        'LAST_NAME' => $LAST_NAME,
+        'USERNAME' => $USERNAME,
+        'PASSWORD_HASH' => $PASSWORD_HASH,
+        'ROLE_ID' => $ROLE_ID,
+        'ADDRESS' => $ADDRESS,
+        'CONTACT_NUMBER' => $CONTACT_NUMBER,
+        'ADMIN_ID' => $ADMIN_ID,
+    ]);
+
+    return redirect('/pos/user');
+}
+
 
     public function delete($USER_ID){
         $model = new user_model();

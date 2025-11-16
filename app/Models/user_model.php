@@ -7,6 +7,20 @@ use Illuminate\Support\Facades\DB;
 
 class user_model extends Model
 {
+        protected $table = 'user'; // <- IMPORTANT FIX
+    protected $primaryKey = 'USER_ID';
+    public $timestamps = false;
+
+    protected $fillable = [
+        'FIRST_NAME',
+        'LAST_NAME',
+        'USERNAME',
+        'PASSWORD_HASH',
+        'ROLE_ID',
+        'ADDRESS',
+        'CONTACT_NUMBER',
+        'ADMIN_ID',
+    ];
     
     public function Get_Roles(){
         return DB::select('SELECT ROLE_ID, ROLE_NAME FROM role');

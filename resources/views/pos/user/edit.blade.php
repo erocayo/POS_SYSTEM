@@ -22,7 +22,7 @@
         <input type="text" name="USERNAME" value="{{ $userlist[0]->USERNAME }}">
         <br>
         <label>Password</label>
-        <input type="text" name="PASSWORD_HASH" value="{{ $userlist[0]->PASSWORD_HASH }}">
+        <input type="password" name="PASSWORD">
         <br>
         <label>Role</label>
         <select name="ROLE_ID">
@@ -42,12 +42,17 @@
         <input type="text" name="CONTACT_NUMBER" value="{{ $userlist[0]->CONTACT_NUMBER }}">
         <br>
         <label>Admin</label>
+        <label>Admin</label>
         <select name="ADMIN_ID" id="adminSelect">
             <option value="">-- Select Admin --</option>
             @foreach($admins as $admin)
-            <option value="{{ $admin->USER_ID }}">{{ $admin->USERNAME }}</option>
+            <option value="{{ $admin->USER_ID }}"
+                {{ $admin->USER_ID == $userlist[0]->ADMIN_ID ? 'selected' : '' }}>
+                {{ $admin->USERNAME }}
+            </option>
             @endforeach
         </select>
+
         <br>
         <button type="submit">Edit User</button>
     </form>
