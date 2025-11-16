@@ -10,6 +10,9 @@
         No product in the database
 
     @else
+@if(session('greeting'))
+    <p>{{ session('greeting') }}</p>
+@endif
     <table>        
         <thead>
             <Th>Product Id</Th>
@@ -37,5 +40,10 @@
             </tbody>
         </table>
             @endif
+                    <br>
+        <form action="{{ url('/pos/logout') }}" method="POST">
+    @csrf
+    <button type="submit">Logout</button>
+</form>
 </body>
 </html>
