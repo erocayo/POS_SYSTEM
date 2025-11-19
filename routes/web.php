@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth_Controller;
 use App\Http\Controllers\product_category_controller;
 use App\Http\Controllers\product_controller;
 use App\Http\Controllers\Sale_Transaction_Controller;
@@ -8,9 +9,13 @@ use App\Http\Controllers\transaction_log_controller;
 use App\Http\Controllers\user_controller;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
+Route::get('/', function (){
     return view('welcome');
 });
+
+Route::get('/pos/login',[Auth_Controller::class, 'Show_LogIn']);
+Route::post('/pos/login',[Auth_Controller::class, 'LogIn']);
+Route::post('/pos/logout',[Auth_Controller::class, 'LogOut']);
 
 // USER
 route::get('/pos/user', [user_controller::class, 'index']);

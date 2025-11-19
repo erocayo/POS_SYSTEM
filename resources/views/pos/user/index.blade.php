@@ -6,10 +6,15 @@
     <title>User Index</title>
 </head>
 <body>
+    
     @if(empty($userlist))
     No User in the  Database
     
-    @else<table>
+    @else
+@if(session('greeting'))
+    <p>{{ session('greeting') }}</p>
+@endif
+<table>
         <thread>
             <th>User Id</th>
             <th>Name</th>
@@ -41,5 +46,11 @@
         @endif
         <br>
         <a href="{{url('/pos/user/add')}}">Add User</a>
+        <br>
+        <form action="{{ url('/pos/logout') }}" method="POST">
+    @csrf
+    <button type="submit">Logout</button>
+</form>
+
 </body>
 </html>

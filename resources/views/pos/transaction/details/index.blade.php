@@ -8,6 +8,9 @@
 </head>
 
 <body>
+@if(session('greeting'))
+    <p>{{ session('greeting') }}</p>
+@endif
 <h3>Sale Transaction Info</h3>
 <table>
     <thead>
@@ -82,7 +85,11 @@
                 @endif
                 <br>
                 <a href="{{ url('/pos/transaction/') }}">Go back</a>
-
+        <br>
+        <form action="{{ url('/pos/logout') }}" method="POST">
+    @csrf
+    <button type="submit">Logout</button>
+</form>
     
 </body>
 
