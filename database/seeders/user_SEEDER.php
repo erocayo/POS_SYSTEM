@@ -37,25 +37,13 @@ class user_SEEDER extends Seeder
 
         ]);
 
-        // Insert Inventory Staff
-        DB::table('user')->insert([
-            'FIRST_NAME' => 'Inventory',
-            'LAST_NAME' => 'Staff',
-            'USERNAME' => 'inventory1',
-            'PASSWORD_HASH' => Hash::make('inventorypassword'),
-            'ROLE_ID' => 3, // Inventory Staff role
-            'ADDRESS' => 'Inventory Address',
-            'CONTACT_NUMBER' => '09121234567',
-            'ADMIN_ID' => $adminId,
-        ]);
-
         // Insert Manager
         DB::table('user')->insert([
             'FIRST_NAME' => 'Manager',
             'LAST_NAME' => 'User',
             'USERNAME' => 'manager1',
             'PASSWORD_HASH' => Hash::make('managerpassword'),
-            'ROLE_ID' => 4, // Manager role
+            'ROLE_ID' => 3, // Manager role
             'ADDRESS' => 'Manager Address',
             'CONTACT_NUMBER' => '09122334455',
             'ADMIN_ID' => $adminId,

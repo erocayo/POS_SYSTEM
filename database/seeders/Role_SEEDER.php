@@ -17,7 +17,6 @@ class Role_SEEDER extends Seeder
             ['ROLE_NAME' => 'Admin', 'DESCRIPTION' => 'System administrator with full access.'],
             ['ROLE_NAME' => 'Cashier', 'DESCRIPTION' => 'Handles sales transactions.'],
             ['ROLE_NAME' => 'Manager', 'DESCRIPTION' => 'Oversees operations and reports.'],
-            ['ROLE_NAME' => 'Inventory Staff','DESCRIPTION' => 'Manages product stock levels and updates product details.']
         ]);
     }
 }
