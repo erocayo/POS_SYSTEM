@@ -3,9 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
-use App\Models\User;
+use App\Models\user_model;
 use Illuminate\Support\Facades\Hash;
 
 class Auth_Controller extends Controller
@@ -21,7 +20,7 @@ public function login(Request $request)
         'PASSWORD' => 'required|string',
     ]);
 
-    $model = new \App\Models\user_model();
+    $model = new user_model();
     $user = $model->Get_User_By_Username($validated['USERNAME']);
 
 if ($user && Hash::check($validated['PASSWORD'], $user->PASSWORD_HASH)) {
@@ -33,16 +32,17 @@ if ($user && Hash::check($validated['PASSWORD'], $user->PASSWORD_HASH)) {
     // store a one-time flash message
     $roleNames = [
         1 => 'Admin',
-        2 => 'Manager',
-        3 => 'Cashier',
+        2 => 'Cashier',
+        3 => 'Manager',
     ];
+    
     $request->session()->flash('greeting', "Hi {$roleNames[$user->ROLE_ID]} {$user->USERNAME}");
 
     // redirect based on role
     switch ($user->ROLE_ID) {
         case 1: return redirect('/pos/user');        // Admin
-        case 2: return redirect('/pos/products');    // Manager
-        case 3: return redirect('/pos/transaction'); // Cashier
+        case 2: return redirect('/pos/transaction'); // Cashier
+        case 3: return redirect('/pos/products');    // Manager
         default: return redirect('/');               // fallback
     }
 }
