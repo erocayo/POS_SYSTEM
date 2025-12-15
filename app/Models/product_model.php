@@ -52,50 +52,37 @@ public function Get_Product_Stock_Summary()
     $products = $this->all();
     $productSummary = [];
 
+    $currentMonth = now()->format('Y-m');
+
     foreach ($products as $product) {
-        // Calculate initial stock before any sales
-        $total_sold = DB::table('sale_transaction_details as td')
-            ->join('sale_transaction_log as log', function($join) {
+
+        // Sales during current month
+        $stock_out = DB::table('sale_transaction_details as td')
+            ->join('sale_transaction_log as log', function ($join) {
                 $join->on('td.SALE_TRANSACTION_ID', '=', 'log.SALE_TRANSACTION_ID')
                      ->where('log.ACTION_TYPE', 'confirmed');
             })
             ->where('td.PRODUCT_ID', $product->PRODUCT_ID)
+            ->whereRaw("DATE_FORMAT(log.created_at, '%Y-%m') = ?", [$currentMonth])
             ->sum('td.QUANTITY');
 
-        $stock = ($product->STOCK_LEVEL ?? 0) + $total_sold;
+        // Ending stock = current stock in product table
+        $ending_stock = $product->STOCK_LEVEL ?? 0;
 
-        // Get sales per month
-        $movements = DB::table('sale_transaction_details as td')
-            ->join('sale_transaction_log as log', function($join) {
-                $join->on('td.SALE_TRANSACTION_ID', '=', 'log.SALE_TRANSACTION_ID')
-                     ->where('log.ACTION_TYPE', 'confirmed');
-            })
-            ->select(
-                DB::raw("DATE_FORMAT(log.created_at, '%Y-%m') as month"),
-                DB::raw("SUM(td.QUANTITY) as stock_out")
-            )
-            ->where('td.PRODUCT_ID', $product->PRODUCT_ID)
-            ->groupBy('month')
-            ->orderBy('month')
-            ->get();
+        // Beginning stock = previous month ending
+        $beginning_stock = $ending_stock + $stock_out;
 
-        foreach ($movements as $m) {
-            $beginning_stock = $stock;
-            $stock_out = $m->stock_out;
-            $ending_stock = $beginning_stock - $stock_out;
-
-            $productSummary[] = [
-                'product_name' => $product->PRODUCT_NAME,
-                'month' => $m->month,
-                'beginning_stock' => $beginning_stock,
-                'stock_out' => $stock_out,
-                'ending_stock' => $ending_stock
-            ];
-
-            $stock = $ending_stock; // next month starts with previous ending stock
-        }
+        $productSummary[] = [
+            'product_name'    => $product->PRODUCT_NAME,
+            'beginning_stock' => $beginning_stock,
+            'stock_out'       => $stock_out,
+            'ending_stock'    => $ending_stock
+        ];
     }
 
     return $productSummary;
 }
+
+
+
 }

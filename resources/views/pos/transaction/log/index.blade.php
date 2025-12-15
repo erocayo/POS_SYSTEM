@@ -57,7 +57,7 @@
 
 
         <div class="text-center mt-4">
-            <a href="{{ url('/pos/transaction/') }}" class="btn btn-secondary">Go Back</a>
+            <a href="{{ url('/pos/admin/dashboard') }}" class="btn btn-secondary">Go Back</a>
         </div>
 
     </div>

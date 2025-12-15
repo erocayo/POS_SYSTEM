@@ -59,13 +59,12 @@
         </div>
 
         <!-- Product Stock Summary -->
-        <h2 class="mb-3">Product Stock Summary</h2>
+        <h2 class="mb-3">Product Stock Summary - {{ \Carbon\Carbon::now()->format('F Y') }}</h2>
         <div class="table-responsive mb-4">
             <table class="table table-bordered table-striped table-hover align-middle text-center">
                 <thead class="table-primary">
                     <tr>
                         <th>Product</th>
-                        <th>Month</th>
                         <th>Beginning Stock</th>
                         <th>Stock Out</th>
                         <th>Ending Stock</th>
@@ -75,7 +74,6 @@
                     @foreach($productSummary as $p)
                     <tr>
                         <td>{{ $p['product_name'] }}</td>
-                        <td>{{ $p['month'] }}</td>
                         <td>{{ $p['beginning_stock'] }}</td>
                         <td>{{ $p['stock_out'] }}</td>
                         <td>{{ $p['ending_stock'] }}</td>
