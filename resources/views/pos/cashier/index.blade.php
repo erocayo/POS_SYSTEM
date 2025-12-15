@@ -46,7 +46,7 @@
                 </form>
 
                 <a href="{{ url('pos/transaction') }}" class="list-group-item list-group-item-action">
-                    🛒 View Transactions
+                    🛒 View Pending Transactions
                 </a>
             </div>
 

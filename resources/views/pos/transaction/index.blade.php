@@ -33,7 +33,7 @@
 
         <div class="p-4 shadow rounded bg-light border">
 
-            <h3 class="mb-3">Sale Transactions</h3>
+            <h3 class="mb-3">Pending Sale Transactions</h3>
 
             <div class="table-responsive">
                 <table class="table table-bordered table-striped table-hover align-middle text-center">
