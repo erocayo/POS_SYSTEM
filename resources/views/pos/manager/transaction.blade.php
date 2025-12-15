@@ -35,38 +35,28 @@
 
         <div class="table-responsive">
             <table class="table table-bordered table-striped table-hover align-middle text-center">
-                <thead class="table-primary">
+                <thead>
                     <tr>
                         <th>Transaction ID</th>
-                        <th>User ID</th>
-                        <th>Status</th>
+                        <th>User</th>
                         <th>Confirmed At</th>
-                        <th>Product</th>
-                        <th>Unit Price</th>
-                        <th>Quantity</th>
-                        <th>Subtotal</th>
-                        <th>Tax</th>
-                        <th>Line Total</th>
+                        <th>Status</th>
+                        <th>Grand Total</th>
                     </tr>
                 </thead>
-
                 <tbody>
-                    @foreach($transactions as $t)
+                    @foreach ($transactions as $t)
                     <tr>
                         <td>{{ $t->SALE_TRANSACTION_ID }}</td>
-                        <td>{{ $t->USER_ID }}</td>
-                        <td>{{ $t->STATUS }}</td>
+                        <td>{{ $t->USERNAME }}</td>
                         <td>{{ $t->confirmed_at }}</td>
-                        <td>{{ $t->PRODUCT_NAME }}</td>
-                        <td>{{ number_format($t->UNIT_PRICE, 2) }}</td>
-                        <td>{{ $t->QUANTITY }}</td>
-                        <td>{{ number_format($t->subtotal, 2) }}</td>
-                        <td>{{ number_format($t->tax_amount, 2) }}</td>
-                        <td>{{ number_format($t->line_total, 2) }}</td>
+                        <td>{{ ucfirst($t->STATUS) }}</td>
+                        <td>₱{{ number_format($t->grand_total, 2) }}</td>
                     </tr>
                     @endforeach
                 </tbody>
             </table>
+
         </div>
 
         <div class="text-center mt-4">

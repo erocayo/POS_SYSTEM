@@ -107,35 +107,27 @@ public function Get_Monthly_Sale_Summary_With_Totals()
 }
 
 public function Get_This_Month_Transactions()
-    {
-        // Get the first and last day of current month
-        $start = date('Y-m-01 00:00:00');
-        $end   = date('Y-m-t 23:59:59');
+{
+    $start = date('Y-m-01 00:00:00');
+    $end   = date('Y-m-t 23:59:59');
 
-        return DB::table('sale_transaction as st')
-            ->join('sale_transaction_log as log', function($join){
-                $join->on('st.SALE_TRANSACTION_ID', '=', 'log.SALE_TRANSACTION_ID')
-                     ->where('log.ACTION_TYPE', 'confirmed');
-            })
-            ->join('sale_transaction_details as std', 'st.SALE_TRANSACTION_ID', '=', 'std.SALE_TRANSACTION_ID')
-            ->join('product as p', 'p.PRODUCT_ID', '=', 'std.PRODUCT_ID')
-            ->join('product_category as pc', 'pc.PRODUCT_CATEGORY_ID', '=', 'p.PRODUCT_CATEGORY_ID')
-            ->select(
-                'st.SALE_TRANSACTION_ID',
-                'st.USER_ID',
-                'st.STATUS',
-                DB::raw("log.created_at as confirmed_at"),
-                'std.PRODUCT_ID',
-                'p.PRODUCT_NAME',
-                'std.UNIT_PRICE',
-                'std.QUANTITY',
-                DB::raw("(std.UNIT_PRICE * std.QUANTITY) as subtotal"),
-                DB::raw("((std.UNIT_PRICE * std.QUANTITY) * (pc.TAX_RATE / 100)) as tax_amount"),
-                DB::raw("((std.UNIT_PRICE * std.QUANTITY) * (1 + pc.TAX_RATE / 100)) as line_total")
-            )
-            ->whereBetween('log.created_at', [$start, $end])
-            ->where('st.STATUS', 'completed')
-            ->orderBy('log.created_at', 'DESC')
-            ->get();
-    }
+    return DB::table('sale_transaction as st')
+        ->join('user as u', 'u.USER_ID', '=', 'st.USER_ID')
+        ->join('sale_transaction_log as log', function ($join) {
+            $join->on('st.SALE_TRANSACTION_ID', '=', 'log.SALE_TRANSACTION_ID')
+                 ->where('log.ACTION_TYPE', 'confirmed');
+        })
+        ->select(
+            'st.SALE_TRANSACTION_ID',
+            'u.USERNAME',
+            'st.STATUS',
+            'st.TOTAL_PRICE as grand_total',
+            DB::raw('log.created_at as confirmed_at')
+        )
+        ->whereBetween('log.created_at', [$start, $end])
+        ->where('st.STATUS', 'completed')
+        ->orderBy('log.created_at', 'DESC')
+        ->get();
+}
+
 }
