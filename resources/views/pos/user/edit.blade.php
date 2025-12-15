@@ -63,20 +63,20 @@
 
                 <div class="mb-3">
                     <label class="form-label">First Name</label>
-                    <input type="text" name="FIRST_NAME" class="form-control" 
-                           value="{{ $userlist[0]->FIRST_NAME }}">
+                    <input type="text" name="FIRST_NAME" class="form-control"
+                        value="{{ $userlist[0]->FIRST_NAME }}">
                 </div>
 
                 <div class="mb-3">
                     <label class="form-label">Last Name</label>
-                    <input type="text" name="LAST_NAME" class="form-control" 
-                           value="{{ $userlist[0]->LAST_NAME }}">
+                    <input type="text" name="LAST_NAME" class="form-control"
+                        value="{{ $userlist[0]->LAST_NAME }}">
                 </div>
 
                 <div class="mb-3">
                     <label class="form-label">Username</label>
-                    <input type="text" name="USERNAME" class="form-control" 
-                           value="{{ $userlist[0]->USERNAME }}">
+                    <input type="text" name="USERNAME" class="form-control"
+                        value="{{ $userlist[0]->USERNAME }}">
                 </div>
 
                 <div class="mb-3">
@@ -98,15 +98,18 @@
 
                 <div class="mb-3">
                     <label class="form-label">Address</label>
-                    <input type="text" name="ADDRESS" class="form-control" 
-                           value="{{ $userlist[0]->ADDRESS }}">
+                    <input type="text" name="ADDRESS" class="form-control"
+                        value="{{ $userlist[0]->ADDRESS }}">
                 </div>
 
                 <div class="mb-3">
                     <label class="form-label">Contact Number</label>
-                    <input type="text" name="CONTACT_NUMBER" class="form-control" 
-                           value="{{ $userlist[0]->CONTACT_NUMBER }}">
+                    <input type="tel" name="CONTACT_NUMBER" class="form-control"
+                        pattern="[0-9]{11}" title="Enter 11-digit number"
+                        inputmode="numeric"
+                        value="{{ $userlist[0]->CONTACT_NUMBER }}">
                 </div>
+
 
                 <button type="submit" class="btn btn-primary w-100">Update User</button>
             </form>

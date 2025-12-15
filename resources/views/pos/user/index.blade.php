@@ -47,7 +47,6 @@
                         <th>User Id</th>
                         <th>Name</th>
                         <th>Username</th>
-                        <th>Password Hash</th>
                         <th>Role Id</th>
                         <th>Address</th>
                         <th>Contact Number</th>
@@ -62,7 +61,6 @@
                         <td>{{ $user->USER_ID }}</td>
                         <td>{{ $user->FIRST_NAME }} {{ $user->LAST_NAME }}</td>
                         <td>{{ $user->USERNAME }}</td>
-                        <td class="text-truncate" style="max-width: 150px;">{{ $user->PASSWORD_HASH }}</td>
                         <td>{{ $user->ROLE_ID }}</td>
                         <td>{{ $user->ADDRESS }}</td>
                         <td>{{ $user->CONTACT_NUMBER }}</td>

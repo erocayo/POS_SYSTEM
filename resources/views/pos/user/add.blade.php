@@ -97,7 +97,7 @@
 
                 <div class="mb-3">
                     <label class="form-label">Contact Number</label>
-                    <input type="text" name="CONTACT_NUMBER" class="form-control">
+                    <input type="tel" name="CONTACT_NUMBER" class="form-control" pattern="[0-9]{11}" title="Enter 11-digit number">
                 </div>
 
                 <button type="submit" class="btn btn-primary w-100">Add User</button>
@@ -110,7 +110,7 @@
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
+        document.addEventListener('DOMContentLoaded', function() {
             const roleSelect = document.querySelector('select[name="ROLE_ID"]');
             const adminSelect = document.querySelector('select[name="ADMIN_ID"]');
             const restrictedRoles = ['2', '3', '4']; // cashier, manager, inventory, etc.
@@ -130,4 +130,5 @@
     </script>
 
 </body>
+
 </html>
