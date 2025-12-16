@@ -14,7 +14,7 @@
 
     <!-- NAVBAR -->
 <nav class="navbar navbar-expand-lg navbar-dark" 
-     style="background: linear-gradient(to right, #FFD700, #FFA500, #FF7F50, #FF4500, #FF3F3F);">
+     style="background: linear-gradient(to right, #FF3F3F, #FF4500 , #FF7F50, #FFA500, #FFD700);">
     <div class="container-fluid">
         <span class="navbar-brand">POS SYSTEM</span>
 

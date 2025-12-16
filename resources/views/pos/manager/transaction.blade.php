@@ -13,7 +13,7 @@
 <body>
 
     <!-- NAVBAR (copied style) -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary" style="background: linear-gradient(to right, #FFFF00, #FFD700, #FF8C00, #FF4500, #FF0000);">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary" style="background: linear-gradient(to right,  #FF3F3F, #FF4500 , #FF7F50, #FFA500, #FFD700);">
         <div class="container-fluid">
             <span class="navbar-brand">POS System</span>
 
@@ -49,7 +49,7 @@
                     <tr>
                         <td>{{ $t->SALE_TRANSACTION_ID }}</td>
                         <td>{{ $t->USERNAME }}</td>
-                        <td>{{ $t->confirmed_at }}</td>
+                        <td>{{ \Carbon\Carbon::parse($t->confirmed_at)->format('M d, Y h:i A') }}</td>
                         <td>{{ ucfirst($t->STATUS) }}</td>
                         <td>₱{{ number_format($t->grand_total, 2) }}</td>
                     </tr>

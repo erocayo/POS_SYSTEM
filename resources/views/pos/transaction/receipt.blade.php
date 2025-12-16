@@ -30,7 +30,7 @@
 <body>
 
     <!-- NAVBAR -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary" style="background: linear-gradient(to right, #FFFF00, #FFD700, #FF8C00, #FF4500, #FF0000);">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary" style="background: linear-gradient(to right,  #FF3F3F, #FF4500 , #FF7F50, #FFA500, #FFD700);">
         <div class="container-fluid">
             <span class="navbar-brand">POS System</span>
             <div class="d-flex">
@@ -52,7 +52,6 @@
                 <h3 class="mb-0">Receipt #{{ $transaction->SALE_TRANSACTION_ID }}</h3>
                 <button onclick="window.print()" class="btn btn-primary">Print</button>
             </div>
-            <p class="text-end"><strong>Date Completed:</strong> {{ $completed_log[0]->created_at }}</p>
 
             <div id="printable">
                 <!-- POS System header for print -->
@@ -104,7 +103,7 @@
             </div>
 
             <div class="text-center mt-3">
-                <a href="{{ url('/pos/transaction') }}" class="btn btn-secondary">Go Back</a>
+                <a href="{{ url('/pos/cashier/dashboard') }}" class="btn btn-secondary">Go Back</a>
             </div>
 
         </div>

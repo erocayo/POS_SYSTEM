@@ -13,7 +13,7 @@
 <body>
 
     <!-- NAVBAR -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary" style="background: linear-gradient(to right, #FFFF00, #FFD700, #FF8C00, #FF4500, #FF0000);">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary" style="background: linear-gradient(to right, #FF3F3F, #FF4500 , #FF7F50, #FFA500, #FFD700);">
         <div class="container-fluid">
             <span class="navbar-brand">POS System</span>
 
@@ -30,6 +30,10 @@
 
     <!-- CONTENT -->
     <div class="container mt-4">
+        <!-- Go Back Button -->
+        <div class="text-left mt-4">
+            <a href="{{ url('pos/manager/dashboard') }}" class="btn btn-secondary">Go Back</a>
+        </div>
 
         <!-- Monthly Sales Summary -->
         <h2 class="mb-3">Monthly Sales Summary</h2>
@@ -83,10 +87,6 @@
             </table>
         </div>
 
-        <!-- Go Back Button -->
-        <div class="text-center mt-4">
-            <a href="{{ url('pos/manager/dashboard') }}" class="btn btn-secondary">Go Back</a>
-        </div>
 
     </div>
 

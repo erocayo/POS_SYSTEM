@@ -88,7 +88,7 @@ public function cancel($SALE_TRANSACTION_ID)
 
     $log = new transaction_log_model();
     $log->Add_Transaction_Log($SALE_TRANSACTION_ID, 'deleted');
-    return redirect('/pos/transaction');
+    return redirect('/pos/cashier/dashboard');
 }
 
 
